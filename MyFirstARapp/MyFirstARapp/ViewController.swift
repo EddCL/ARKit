@@ -26,42 +26,45 @@ class ViewController: UIViewController {
         //mySphere.position = SCNVector3(x: 0, y: 0, z: -0.4)
         
         //MARK: Creamos los planetas
-        let sun = createPlanet(radius: 1.0, texture: "sol")
-        let mercury = createPlanet(radius: 1, texture: "mercurio")
-        let venus = createPlanet(radius: 1, texture: "venus")
-        let earth = createPlanet(radius: 0.4, texture: "tierra")
-        let mars = createPlanet(radius: 0.45, texture: "marte")
-        let jupiter = createPlanet(radius: 1, texture: "jupiter")
-        let saturn = createPlanet(radius: 1, texture: "saturno")
-        let uranus = createPlanet(radius: 1, texture: "urano")
-        let neptune = createPlanet(radius: 1, texture: "neptuno")
+        let sun = createPlanet(radius: 1.50, texture: "sol")
+        let mercury = createPlanet(radius: 0.05, texture: "mercurio")
+        let venus = createPlanet(radius: 0.10, texture: "venus")
+        let earth = createPlanet(radius: 0.15, texture: "tierra2")
+        let mars = createPlanet(radius: 0.09, texture: "marte")
+        let jupiter = createPlanet(radius: 0.50, texture: "jupiter")
+        let saturn = createPlanet(radius: 0.45, texture: "saturno")
+        let saturnRings = createSaturnRing(radiusExt: 0.80, radiusInt: 0.46, texture: "saturnmap")
+        let uranus = createPlanet(radius: 0.40, texture: "urano")
+        let neptune = createPlanet(radius: 0.38, texture: "neptuno")
        
         //MARK: Colocamos su posicion y los agregamos a la escena
-        sun.position = SCNVector3(x: 0, y: 0.4, z: -5)
+        sun.position = SCNVector3(x: 0, y: 0, z: -7)
         sceneView.scene.rootNode.addChildNode(sun)
         
-        mercury.position = SCNVector3(x: 0, y: 0.4, z: -5)
+        mercury.position = SCNVector3(x: 0, y: 0, z: -4)
         sceneView.scene.rootNode.addChildNode(mercury)
         
-        venus.position = SCNVector3(x: 0, y: 0.4, z: -5)
+        venus.position = SCNVector3(x: 0, y: 0, z: -2)
         sceneView.scene.rootNode.addChildNode(venus)
         
-        earth.position = SCNVector3(x: 0, y: 0.4, z: -2)
+        earth.position = SCNVector3(x: 0, y: 0, z: 0)
         sceneView.scene.rootNode.addChildNode(earth)
         
-        mars.position = SCNVector3(x: 0, y: 0.4, z: 1)
+        mars.position = SCNVector3(x: 0, y: 0, z: 1)
         sceneView.scene.rootNode.addChildNode(mars)
         
-        jupiter.position = SCNVector3(x: 0, y: 0.4, z: -5)
+        jupiter.position = SCNVector3(x: 0, y: 0, z: 2)
         sceneView.scene.rootNode.addChildNode(jupiter)
         
-        saturn.position = SCNVector3(x: 0, y: 0.4, z: -5)
+        saturn.position = SCNVector3(x: 0, y: 0, z: 3.5)
         sceneView.scene.rootNode.addChildNode(saturn)
+        saturnRings.position = SCNVector3(x: 0, y: 0, z: 3.5)
+        sceneView.scene.rootNode.addChildNode(saturnRings)
         
-        uranus.position = SCNVector3(x: 0, y: 0.4, z: -5)
+        uranus.position = SCNVector3(x: 0, y: 0, z: 4.5)
         sceneView.scene.rootNode.addChildNode(uranus)
         
-        neptune.position = SCNVector3(x: 0, y: 0.4, z: -5)
+        neptune.position = SCNVector3(x: 0, y: 0, z: 5.6)
         sceneView.scene.rootNode.addChildNode(neptune)
         
         //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
@@ -95,11 +98,23 @@ class ViewController: UIViewController {
         
         let sphereNode = SCNNode(geometry: sphere)
         sphereNode.name = "planet"
-        sphereNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: sphere, options: nil))
+        //sphereNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: sphere, options: nil))
         
-        sphereNode.physicsBody?.isAffectedByGravity = true
+        //sphereNode.physicsBody?.isAffectedByGravity = true
         
         return sphereNode
+    }
+    
+    func createSaturnRing(radiusExt: CGFloat, radiusInt:CGFloat, texture: String) -> SCNNode{
+        let ring = SCNTube(innerRadius: radiusInt, outerRadius: radiusExt, height: 0.01)
+        let material = SCNMaterial()
+        
+        material.diffuse.contents = UIImage(named: texture)
+        ring.materials = [material]
+        
+        let ringNode = SCNNode(geometry: ring)
+        
+        return ringNode
     }
     
     func createARText(text: String) -> SCNNode{
@@ -112,6 +127,7 @@ class ViewController: UIViewController {
         
         return textNode
     }
+    
 
 }
 
