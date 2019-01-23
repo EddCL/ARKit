@@ -67,8 +67,8 @@ class ViewController: UIViewController {
         neptune.position = SCNVector3(x: 0, y: 0, z: 5.6)
         sceneView.scene.rootNode.addChildNode(neptune)
         
-        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
-        //sceneView.addGestureRecognizer(tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        sceneView.addGestureRecognizer(tapGesture)
        
         /* let text = createARText(text: "ARKit en el lab iOS")
         text.position = SCNVector3(0, 0, 0)
@@ -83,6 +83,7 @@ class ViewController: UIViewController {
             let node = hitResult.node
             if node.name == "planet"{
                 node.geometry?.material(named: "planetTexture")?.diffuse.contents = UIImage(named: "sol")
+                node.physicsBody?.applyForce(SCNVector3(x: 0, y: -1, z: 0), asImpulse: true)
             }
         }
     }
@@ -98,9 +99,9 @@ class ViewController: UIViewController {
         
         let sphereNode = SCNNode(geometry: sphere)
         sphereNode.name = "planet"
-        //sphereNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: sphere, options: nil))
+        sphereNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: sphere, options: nil))
         
-        //sphereNode.physicsBody?.isAffectedByGravity = true
+        sphereNode.physicsBody?.isAffectedByGravity = false
         
         return sphereNode
     }
